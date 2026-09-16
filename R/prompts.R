@@ -11,7 +11,7 @@ teachr_system_prompt <- function(mode) {
       "Hard rule: if code selection is EMPTY, do not infer code intent, bugs, or runtime issues.",
       "Hard rule: Explain what the code does; do not diagnose, mention, or speculate about errors.",
       "When information is missing, say exactly what is missing and ask for the smallest useful next input.",
-      "Hard rule: do not imply persistent memory or invite ongoing conversation (e.g. \"let me know and I'll help further\"); each call is a single, stateless request, so ask the user to rerun teachr_plan() with more detail instead."
+      "Hard rule: do not imply persistent memory or invite ongoing conversation (e.g. \"let me know and I'll help further\"); each call is a single, stateless request."
     ),
     hint = paste(
       "You are a calm teaching assistant for R learners.",
