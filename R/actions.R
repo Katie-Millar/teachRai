@@ -79,24 +79,28 @@ teachr_run_mode <- function(mode,
   mode <- teachr_match_mode(mode)
 
   if (identical(mode, "plan")) {
-    context <- context %||% list()
-    context$selection <- context$selection %||% teachr_current_selection()
+    # FIX 1: use teachr_capture_context() like the other modes, so highlighted
+    # code is captured the same way explain/hint/debug capture it.
+    context <- context %||% teachr_capture_context(mode)
     auto_goal <- teachr_extract_goal_from_comment(context$selection)
 
-    context$packages_loaded <- context$packages_loaded %||% context$loaded_packages
     context$goal_text <- goal_text %||% context$goal_text %||%
       (if (nzchar(auto_goal)) auto_goal else NULL)
     context$data_columns <- data_columns %||% context$data_columns
     context$object_names <- object_names %||% context$object_names
-    context$packages_loaded <- packages_loaded %||% context$packages_loaded %||% teachr_loaded_packages()
+    context$packages_loaded <- packages_loaded %||% context$packages_loaded %||%
+      context$loaded_packages %||% teachr_loaded_packages()
 
     exemplars <- teachr_find_exemplars(
       mode = mode,
       goal_text = context$goal_text %||% "",
       packages = context$packages_loaded
     )
+    # FIX 2: pass context so teachr_build_prompt() can include the selection
+    # in the plan prompt sent to the LLM.
     prompt <- teachr_build_prompt(
       mode = mode,
+      context = context,
       goal_text = context$goal_text,
       data_columns = context$data_columns,
       object_names = context$object_names,
