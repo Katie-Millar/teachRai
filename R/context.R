@@ -24,11 +24,12 @@ teachr_current_selection <- function() {
     return("")
   }
 
-  context <- rstudioapi::getActiveDocumentContext()
-  selections <- vapply(context$selection, `[[`, character(1), "text")
-  selections <- selections[nzchar(selections)]
-
-  paste(selections, collapse = "\n")
+  tryCatch({
+    context <- rstudioapi::getActiveDocumentContext()
+    selections <- vapply(context$selection, `[[`, character(1), "text")
+    selections <- selections[nzchar(selections)]
+    paste(selections, collapse = "\n")
+  }, error = function(e) "")
 }
 
 teachr_recent_error <- function() {
@@ -38,9 +39,14 @@ teachr_recent_error <- function() {
     return("")
   }
 
+  # Filter stale errors left by devtools/pkgload/testthat internals
+  stale_patterns <- c("testthat", "pkgload", "devtools", "-package", "teachr")
+  if (any(vapply(stale_patterns, function(p) grepl(p, error, fixed = TRUE), logical(1)))) {
+    return("")
+  }
+
   error
 }
-
 teachr_clear_recent_error <- function() {
   # geterrmessage() has no public "clear" API. Throwing a call-less, empty
   # error and swallowing it resets the buffer to the same "no error" shape

@@ -28,7 +28,7 @@ teachr_system_prompt <- function(mode) {
       "Keep code chunks short and readable.",
       "Apply the mode rules below in the order given and use the first one whose condition matches.",
       "Mode: give one hint that moves the student forward without solving the problem.",
-      "If Code selection is EMPTY, give one imperative sentence stating what to select, run or share. Do not comment on any code.",
+      "If Code selection is EMPTY, respond with exactly this: 'No code is selected. Select the code you want a hint on in the editor, then run teachr_hint() again.' Write nothing else.",
       "If Observed error state is UNCERTAIN, begin by stating that the error may not relate to the selected code.",
       "If Observed error state is NONE, do not suggest that anything is wrong.",
       "The hint is at most two sentences and may include one snippet of no more than five lines. Always leave at least one step for the student to complete.",
@@ -45,8 +45,8 @@ teachr_system_prompt <- function(mode) {
       "Apply the mode rules below in the order given and use the first one whose condition matches.",
       "End the response immediately after its final required element. Do not add a closing sentence, summary, offer of further help or question about what the student wants next.",
       "Mode: help the student find and fix the cause of an error.",
-      "If Code selection is EMPTY, give one imperative sentence telling the student to select the code that produced the error. Write nothing else.",
-      "If Observed error state is NONE, state that no error was captured, then give one imperative sentence telling the student to run the code and copy the full error message, and to remember to running teachr_debug() again with the erorr message highlighted",
+      "If Code selection is EMPTY, respond with exactly this: 'No code is selected. Select the code you want to debug in the editor, then run teachr_debug() again.' Write nothing else.",
+      "If Observed error state is NONE, tell the student in one sentence that no error was captured, which may mean the code is running correctly. Tell them to run the code first if they are expecting an error, then call teachr_debug() again with the highlighted code immediately. Write nothing else.", 
       "If Observed error state is UNCERTAIN, state that the error may not match the selected code, then give two or three general checks relevant to the error text. Do not give a definitive diagnosis.",
       "If Observed error state is OBSERVED, quote the key part of the error, name the most likely cause in the selected code, identify the line involved and show the minimal change as a short snippet. Do not rewrite the whole script.", 
       "If telling the student to show the full error message, remind them to run 'teachr_debug' again, and copy the full error message."
@@ -63,7 +63,7 @@ teachr_system_prompt <- function(mode) {
       "Then give 1-2 strategy hints, each followed by a short scaffold snippet.",
       "Never write a full end-to-end script. Always leave at least one step for the student to complete.",
       "The response should end immediately after the final scaffold snippet.",
-      "If the student needs to provide more detail, tell them to run teachr_plan(goal_text = '...') again with more specific information."
+      "If the student needs to provide more detail, tell them to run teachr_plan(goal_text = \"...\") again with more specific information."
     )
   )
 }
