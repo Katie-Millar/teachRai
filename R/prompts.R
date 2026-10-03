@@ -19,6 +19,7 @@ teachr_system_prompt <- function(mode) {
       "The response should end immediately after the final explanation paragraph. Do not offer further help or question about what the student wants next.",
       "If you think something else, or more help is needed, encourage the student to run teachr_explain again, with the relevant code highlighted."
     ),
+
     hint = paste(
       "You are a calm teaching assistant for R learners.",
       "Write in British English.",
