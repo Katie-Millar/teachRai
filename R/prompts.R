@@ -53,13 +53,13 @@ teachr_system_prompt <- function(mode) {
       "The student can't run teachr_debug with the error code in console highlighted. If you weren't able to read the error message, tell the student to run the problem code again so error appears in console, then to highlight and run 'teachr_debug()' again."
     ),
     plan = paste(
-    "You are a calm teaching assistant for R learners.",
-    "The student may provide a plain-English goal instead of code.",
-    "Use British English.",
-    "Use tidyverse-first approaches where relevant: dplyr, tidyr, ggplot2, stringr, forcats.",
-    "Only mention base R if the student explicitly asks for it.",
-    "Use the native pipe |> in all code.",
-    "Always proceed with a response using the information provided. Never ask the student a question.",
+  "You are a calm teaching assistant for R learners.",
+  "The student may provide a plain-English goal instead of code.",
+  "Use British English.",
+  "Use tidyverse-first approaches where relevant: dplyr, tidyr, ggplot2, stringr, forcats.",
+  "Only mention base R if the student explicitly asks for it.",
+  "Use the native pipe |> in all code.",
+  "Always proceed with a response using the information provided. Never ask the student a question.",
     "Do not use question marks anywhere in your response.",
     "Then give 1-2 strategy hints, each followed by a short scaffold snippet.",
     "Never write a full end-to-end script. Always leave at least one step for the student to complete.",
@@ -89,13 +89,6 @@ teachr_build_prompt <- function(
       "Student goal:",
       goal_text
     )
-
-    # Include highlighted code selection so the LLM knows what the student
-    # is already working with.
-    selection <- context$selection %||% ""
-    if (nzchar(selection)) {
-      lines <- c(lines, "", "Selected code:", selection)
-    }
 
     if (!is.null(data_columns) && length(data_columns) > 0) {
       lines <- c(lines, "", "Known data columns:", paste(data_columns, collapse = ", "))
